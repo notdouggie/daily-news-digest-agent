@@ -91,7 +91,7 @@ Structure the HTML exactly as follows:
 }
 
 function setDailyTrigger() {
-  ScriptApp.newTrigger('runHorizonScan')
+  ScriptApp.newTrigger('runDailyDigest')
     .timeBased()
     .everyDays(1)
     .atHour(6)
