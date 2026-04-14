@@ -73,7 +73,7 @@ Perform a maximum of 4 web searches total. Be selective. Use this tiered approac
 }
 
 function setDailyTrigger() {
-  ScriptApp.newTrigger('runHorizonScan')
+  ScriptApp.newTrigger('runDailyDigest')
     .timeBased()
     .everyDays(1)
     .atHour(6)
