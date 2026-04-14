@@ -38,17 +38,29 @@ Perform a maximum of 4 web searches total. Be selective. Use this tiered approac
 6. Footer line: "This daily digest is summarised by AI using Claude claude-sonnet-4-6 and Google Apps Script."
 
 # Style — all CSS must be inline, Gmail strips external stylesheets
-- Header bar: background-color:#D4651B; padding:28px 32px; 
+- Outer wrapper: style="background-color:#ffffff;max-width:620px;margin:0 auto;font-family:'Playfair Display',serif;"
+- Header bar: style="background-color:#D4651B;padding:28px 32px;" — always orange, Gmail never inverts this
 - h1: style="font-size:32px;font-weight:700;color:#ffffff;font-family:'Playfair Display',serif;margin:0 0 8px 0;"
-- h2: style="font-size:16px;font-weight:400;color:rgba(255,255,255,0.85);font-family:'Playfair Display',serif;margin:0;"
-- Body: background-color:#141413; color:#c8c4bc; font-family:'Playfair Display',serif;
-- Section headings: style="font-size:13px;text-transform:uppercase;letter-spacing:0.1em;color:#D4651B;font-family:sans-serif;font-weight:600;"
-- Body paragraphs: style="font-size:15px;line-height:1.8;color:#b0aca4;"
-- Market tiles: each tile a separate <div> with style="display:inline-block;min-width:120px;margin:8px;padding:16px;border-radius:8px;background-color:#1e1e1c !important;border:1px solid #333;text-align:center;vertical-align:top;"
-- Callout boxes: style="background-color:#1e1e1c !important;border-left:3px solid #D4651B;padding:12px 16px;margin-top:16px;" with label style="font-size:10px;color:#D4651B;text-transform:uppercase;letter-spacing:0.07em;font-family:sans-serif;margin-bottom:5px;" and text style="font-size:13px;font-weight:600;color:#ffffff !important;font-family:sans-serif;line-height:1.55;"
-- Sources and footer: font-size:11px;color:#555;font-family:sans-serif; with links styled color:#D4651B;
+- h2: style="font-size:16px;font-weight:400;color:rgba(255,255,255,0.88);font-family:'Playfair Display',serif;margin:0;font-style:italic;"
+- Body wrapper: style="background-color:#f7f6f3;padding:16px 24px;"
+- Section headings: style="font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:#D4651B;font-family:sans-serif;font-weight:600;border-bottom:1px solid #e5e5ea;padding-bottom:6px;margin:20px 0 10px 0;"
+- Body paragraphs: style="font-size:14px;line-height:1.8;color:#3a3a3c;font-family:'Playfair Display',serif;" — MAX 4 SENTENCES
+- Market tiles: a div with style="display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:16px;background-color:#f7f6f3;"
+  Each tile: style="background-color:#ffffff;border:1px solid #e5e5ea;border-radius:8px;padding:14px 12px;text-align:center;"
+  Tile label: style="font-size:9px;color:#8e8e93;text-transform:uppercase;letter-spacing:0.08em;font-family:sans-serif;margin-bottom:6px;"
+  Tile value: style="font-size:18px;font-weight:700;font-family:'Playfair Display',serif;margin-bottom:3px;color:#1c1c1e;"
+  Tile change: style="font-size:10px;font-family:sans-serif;" — #34c759 if positive, #ff3b30 if negative
+- Callout boxes: style="background-color:#fff3ec;border-left:3px solid #D4651B;padding:12px 16px;margin-top:12px;"
+  Label: style="font-size:9px;color:#D4651B;text-transform:uppercase;letter-spacing:0.07em;font-family:sans-serif;margin-bottom:5px;"
+  Text: style="font-size:13px;font-weight:600;color:#1c1c1e;font-family:sans-serif;line-height:1.5;" — MAX 2 SENTENCES
+- Sources: style="padding:12px 24px;border-top:1px solid #e5e5ea;background-color:#f7f6f3;"
+  Label: style="font-size:9px;color:#8e8e93;text-transform:uppercase;letter-spacing:0.06em;font-family:sans-serif;margin-bottom:4px;"
+  Links: style="font-size:10px;color:#D4651B;font-family:sans-serif;line-height:1.8;" — every source as a working hyperlink, mandatory
+- Footer: style="padding:8px 24px 20px;background-color:#f7f6f3;"
+  Text: style="font-size:9px;color:#aeaeb2;font-family:sans-serif;font-style:italic;"
+  Content: "This daily digest is summarised by AI using Claude claude-sonnet-4-6 and Google Apps Script."
 - Include <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet"> in <head>
-- Executive, high-signal, no fluff`;
+- Executive, high-signal, no fluff
 
   const response = UrlFetchApp.fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
