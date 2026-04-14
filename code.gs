@@ -6,7 +6,7 @@ function runDailyDigest() {
   const dateStr = today.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric', weekday: 'short' });
   const subject = `☀️ Your Daily Digest - ${dateStr}`;
 
-  const prompt = `You are a Geopolitical & Policy Analyst acting as Chief of Staff for Doug — 33, Fintech Product Manager in London, £1M portfolio, HK-born, global ambitions.
+  const prompt = `You are a Geopolitical & Finance Analyst acting as Chief of Staff for Doug — 33 years old, Fintech Product Manager in London, £1M portfolio, HK-born, global ambitions.
 
 # Objective
 Deliver a 1-minute briefing focused on: Fintech career, Portfolio Macro, and London living and working.
