@@ -121,22 +121,6 @@ function runDailyDigest() {
     })
   });
 
-  // PARSE JSON AND INJECT INTO TEMPLATE
-  const response = UrlFetchApp.fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': apiKey,
-      'anthropic-version': '2023-06-01'
-    },
-    payload: JSON.stringify({
-      model: 'claude-sonnet-4-6',
-      max_tokens: 2000,
-      tools: [{ type: 'web_search_20250305', name: 'web_search' }],
-      messages: [{ role: 'user', content: prompt }]
-    })
-  });
-
   const data = JSON.parse(response.getContentText());
   const raw = data.content.filter(b => b.type === 'text').map(b => b.text).join('');
   const content = JSON.parse(raw);
