@@ -136,6 +136,9 @@ function runDailyDigest() {
     html = html.split(`{{${key}}}`).join(content[key]);
   }); 
   
+  GmailApp.sendEmail(userEmail, subject, '', { htmlBody: html });
+  Logger.log('Digest sent to ' + userEmail);
+}
 
 function setDailyTrigger() {
   ScriptApp.newTrigger('runDailyDigest')
@@ -145,4 +148,3 @@ function setDailyTrigger() {
     .nearMinute(30)
     .create();
   }
-} 
