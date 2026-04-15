@@ -57,7 +57,7 @@ function runDailyDigest() {
 </body>
 </html>`;
 
-  // 2. PROMPT — asks Claude for JSON only, no HTML
+  // PROMPT
   const prompt = `You are a Geopolitical & Finance Analyst acting as Chief of Staff for Doug — 33, Fintech Product Manager in London, £1M portfolio, HK-born, global ambitions.
 
 Objective: Deliver a daily briefing focused on Fintech career, Portfolio Macro, and London living.
@@ -95,6 +95,7 @@ Output: Return valid JSON only. No markdown, no code fences, nothing else. Use e
   "SOURCES": "<a href='URL' style='color:#D4651B;'>Source Name</a>, ..."
 }`;
 
+// API CALL
   const response = UrlFetchApp.fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: {
@@ -104,14 +105,21 @@ Output: Return valid JSON only. No markdown, no code fences, nothing else. Use e
     },
     payload: JSON.stringify({
       model: 'claude-sonnet-4-6',
-      max_tokens: 4000,
+      max_tokens: 5000,
       tools: [{ type: 'web_search_20250305', name: 'web_search' }],
       messages: [{ role: 'user', content: prompt }]
     })
   });
 
+  // PARSE JSON AND INJECT INTO TEMPLATE
   const data = JSON.parse(response.getContentText());
-  const html = data.content.filter(b => b.type === 'text').map(b => b.text).join('');
+  const raw = data.content.filter(b => b.type === 'text').map(b => b.text).join('');
+  const content = JSON.parse(raw);
+
+  let html = template;
+  Object.keys(content).forEach(key => {
+    html = html.replaceAll(`{{${key}}}`, content[key]);
+  });
 
   GmailApp.sendEmail(userEmail, subject, '', { htmlBody: html });
   Logger.log('Digest sent: ' + subject);
