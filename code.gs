@@ -105,7 +105,7 @@ function runDailyDigest() {
   </body>
   </html>`;
 
-  // API CALL
+  // API CALL - Gemini
   const response = UrlFetchApp.fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: {
@@ -121,18 +121,21 @@ function runDailyDigest() {
     })
   });
 
-  const data = JSON.parse(response.getContentText());
-  const raw = data.content.filter(b => b.type === 'text').map(b => b.text).join('');
-  const content = JSON.parse(raw);
+  // 1. The "Safety" Parse
+  const jsonResponse = JSON.parse(response.getContentText());
 
+  const rawText = jsonResponse.content.find(c => c.type === 'text').text;
+  
+  // 2. Clean potential LLM chatter
+  const jsonString = rawText.substring(rawText.indexOf('{'), rawText.lastIndexOf('}') + 1);
+  const content = JSON.parse(jsonString);
+
+  // 3. The Injection
   let html = template;
   Object.keys(content).forEach(key => {
-    html = html.replaceAll(`{{${key}}}`, content[key]);
-  });
-
-  GmailApp.sendEmail(userEmail, subject, '', { htmlBody: html });
-  Logger.log('Digest sent: ' + subject);
-}
+    html = html.split(`{{${key}}}`).join(content[key]);
+  }); 
+  
 
 function setDailyTrigger() {
   ScriptApp.newTrigger('runDailyDigest')
@@ -141,4 +144,5 @@ function setDailyTrigger() {
     .atHour(6)
     .nearMinute(30)
     .create();
+  }
 }
