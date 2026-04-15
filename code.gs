@@ -145,4 +145,4 @@ function setDailyTrigger() {
     .nearMinute(30)
     .create();
   }
-}
+} 
